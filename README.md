@@ -96,6 +96,50 @@ button { background: #00d1b2; color: black; border: none; padding: 12px 25px; bo
 #chat-feed { height: 70vh; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
 .bubble { background: #232d36; padding: 12px; border-radius: 10px; border-left: 4px solid #00d1b2; width: fit-content; max-width: 80%; }
 .tool-box { position: fixed; bottom: 0; width: 100%; display: flex; padding: 15px; background: #1a1d21; box-sizing: border-box; }
-.btn-tool { background: none; color: #00d1b2; font-size: 24px; }
+.btn-tool { background: none; color: #00d1b2; font-size: 24px; } <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RED GERENCIAL v2.0</title>
+    <style>
+        body { background: #0b0e11; color: #00d1b2; font-family: sans-serif; text-align: center; padding: 50px; }
+        input { padding: 10px; border-radius: 5px; border: none; margin: 10px; }
+        button { background: #00d1b2; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #app { display: none; }
+    </style>
+</head>
+<body>
+    <div id="login">
+        <h1>SISTEMA AUTORIZADO</h1>
+        <input type="password" id="pass" placeholder="Clave 2026">
+        <button onclick="entrar()">ENTRAR</button>
+    </div>
+    <div id="app">
+        <h1>BIENVENIDO JEFE</h1>
+        <p>Caja de Herramientas Activa 🛠️</p>
+        <button onclick="voz()">ORDEN POR VOZ 🎤</button>
+        <div id="muro"></div>
+    </div>
+    <script>
+        function entrar() {
+            if(document.getElementById('pass').value === "2026") {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            } else { alert("ACCESO DENEGADO"); }
+        }
+        function voz() {
+            const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            rec.lang = 'es-ES';
+            rec.onresult = (e) => {
+                const orden = e.results[0][0].transcript.toLowerCase();
+                if(orden.includes("limpiar")) document.getElementById('muro').innerHTML = "";
+                else document.getElementById('muro').innerHTML += `<p>🔒 ${orden}</p>`;
+            };
+            rec.start();
+        }
+    </script>
+</body>
+</html>
+
 
 
